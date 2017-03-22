@@ -17,7 +17,7 @@ if [ ! -e .env ];then
   if [ -e .env.example ]; then
     cp .env.example .env
   else
-    
+    touch .env
   fi
 
 fi
