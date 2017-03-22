@@ -3,15 +3,25 @@ source Laravel_auto_ENV/config.sh
 source Laravel_auto_ENV/function.sh
 
 if [ $COMPOSER_UPDATE=0 ]; then
-  DataChange COMPOSER_UPDATE 1
-  exit 0
-  composer update
+  ConfigChange COMPOSER_UPDATE 1
+  # composer update
 fi
-exit 0
 
 if [ $COMPOSER_INSTALL = 0 ]; then
-  composer install
+  ConfigChange COMPOSER_INSTALL 1
+  # composer install
 fi
+
+if [ ! -e .env ];then
+
+  if [ -e .env.example ]; then
+    cp .env.example .env
+  else
+    
+  fi
+
+fi
+exit 0
 
 if [ $ENV_STATUS = 0 ]; then
 
