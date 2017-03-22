@@ -33,6 +33,9 @@ if [ -n "$1" ]; then
   #
   if [ $1 = revival ]; then
     echo "=============== .env Update ==============="
+    ConfigChange DATABASE
+    ConfigChange MYSQL_USER
+    ConfigChange MYSQL_PASS
     ConfigChange ENV_STATUS 0
     source Laravel_auto_ENV/config.sh
   fi

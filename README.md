@@ -60,10 +60,30 @@
     0 : `composer install`を行います。行った後自動的に`1`に変更されます  
     1 : `composer install`アップデートは行いません。
 
-  - ### `DB_UPDATE`
+  - ### `DB_UPDATE` `DB_MIGRATE` `DB_SEED`
+    いずれもTrueFalseで、動作的には同じです。  
+    0 : 何も行いません。  
+    1 : 毎回行います。  
+    - `DB_UPDATE` : DB作り直し
+    - `DB_MIGRATE` : `php artisan migrate`
+    - `DB_SEED` : `php artisan db:seed`
+
 
   ### オプション
 
   - ### `reset`
+    config.shを初期値に戻します。
+
   - ### `revival`
+    config.shの内部が破損した場合、init.shは機能しません。  
+    よって、このコマンドで復活させてあげてください。
+
   - ### `env`
+    envの更新を行います。Database,Username,Password　の変更ができます。
+
+  - ### `config {option}`
+    - `d {0 or 1}` : `DB_UPDATE`の値を変更します。
+    - `m {0 or 1}` : `DB_MIGRATE`の値を変更します。
+    - `s {0 or 1}` : `DB_SEED`の値を変更します。
+    - `u {0 or 1}` : `COMPOSER_UPDATE`の値を変更します。
+    - `i {0 or 1}` : `COMPOSER_INSTALL`の値を変更します。
