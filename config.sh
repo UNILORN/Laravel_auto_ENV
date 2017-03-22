@@ -3,12 +3,12 @@
 #
 # Database Name
 #
-DATABASE=
+DATABASE=OIC_Book
 
 #
 # Mysql Config
 #
-MYSQL_USER=
+MYSQL_USER=root
 MYSQL_PASS=
 
 #
@@ -16,7 +16,7 @@ MYSQL_PASS=
 # 0 = No Update
 # 1 = Updated
 #
-ENV_STATUS=0
+ENV_STATUS=1
 
 #
 # Composer Status
@@ -32,3 +32,5 @@ COMPOSER_INSTALL=1
 # 1 = Every Update
 #
 DB_UPDATE=1
+DB_MIGRATE=0
+DB_SEED=0

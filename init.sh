@@ -27,6 +27,16 @@ if [ -n "$1" ]; then
     cp Laravel_auto_ENV/config_bk config.sh
     source Laravel_auto_ENV/config.sh
   fi
+
+  #
+  # Update env
+  #
+  if [ $1 = revival ]; then
+    echo "=============== .env Update ==============="
+    ConfigChange ENV_STATUS 0
+    source Laravel_auto_ENV/config.sh
+  fi
+
 fi
 
 
@@ -97,19 +107,32 @@ if [ $ENV_STATUS = 0 ]; then
     echo " [    ] php artisan key:generate"
     # php artisan key:generate
 
-    exit 0
-
+    ConfigChange ENV_STATUS 1
 fi
 visu
 
 #
 # Database Update
 #
-if [ $DB_UPDATE = 1];then
-
-    if [  ]
+if [ $DB_UPDATE = 1 ];then
+    echo " [write] Mysql Password"
+    text=`mysql -u $MYSQL_USER -p -e 'show databases;' | grep -w $DATABASE`
+    if [ $text = $DATABASE ]; then
+      echo " [ OK ] Database Find !!"
+      echo " [write] Mysql Password"
+      mysql -u $MYSQL_USER -p -e 'drop database `'$DATABASE'`;create database `'$DATABASE'`'
+    else
+      echo " [ OK ] Database Not Found !! create Database !!"
+      echo " [write] Mysql Password"
+      mysql -u $MYSQL_USER -p -e 'create database `'$DATABASE'`'
+    fi
 fi
 visu
 
-php artisan migrate
-php artisan db:seed
+if [ $DB_MIGRATE = 1 ]; then
+    php artisan migrate
+fi
+
+if [ $DB_SEED = 1 ]; then
+    php artisan db:seed
+fi
