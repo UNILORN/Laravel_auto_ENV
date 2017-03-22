@@ -30,27 +30,22 @@ fi
 if [ $ENV_STATUS = 0 ]; then
 
     if [ ! -n "$DATABASE" ];then
-      printText DATABASE $DATABASE
-      echo $DATABASE
+      printText DATABASE
     fi
-    exit 0
-
     envChange DB_DATABASE $DATABASE
 
-    echo "====================================================="
-    echo "DBのユーザ名を入力"
-    read username
+    if [ ! -n "$MYSQL_USER" ];then
+      printText MYSQL_USER
+    fi
+    envChange DB_USERNAME $MYSQL_USER
 
-    echo "====================================================="
-    echo "DBのパスワードを入力"
-    read userpass
+    if [ ! -n "$MYSQL_PASS" ];then
+      printText DATABASE
+    fi
+    envChange DB_PASSWORD $MYSQL_PASS
 
-    sed -i -e 's/DB_USERNAME=homestead/DB_USERNAME='$username'/' .env
-    sed -i -e 's/DB_PASSWORD=secret/DB_PASSWORD='$userpass'/' .env
+    exit 0
 
-    echo "====================================================="
-    echo "!! key:generate !!"
-    echo "====================================================="
     php artisan key:generate
 fi
 
