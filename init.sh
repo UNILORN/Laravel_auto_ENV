@@ -1,7 +1,29 @@
 #!/bin/sh
+
+#
+# include shell file
+#
 source Laravel_auto_ENV/config.sh
 source Laravel_auto_ENV/function.sh
 
+initsh_start
+
+if [ -n "$1" ]; then
+  #
+  # Reset Congif
+  #
+  if [ $1 = reset ]; then
+    echo "=============== Config Reset Start ==============="
+    configReset
+    echo "=============== Config Reset End ==============="
+    source Laravel_auto_ENV/config.sh
+  fi
+fi
+
+
+#
+# composer update & install
+#
 if [ $COMPOSER_UPDATE = 0 ]; then
   ConfigChange COMPOSER_UPDATE 1
   # composer update
@@ -12,6 +34,9 @@ if [ $COMPOSER_INSTALL = 0 ]; then
   # composer install
 fi
 
+#
+# touch .env
+#
 if [ ! -e .env ];then
 echo " [    ]  .env Not Found"
 
@@ -26,51 +51,56 @@ echo " [    ]  .env Not Found"
   fi
 
 fi
+visu
 
+#
+# .env Update
+#
 if [ $ENV_STATUS = 0 ]; then
 
+    #
+    # mysql Database name
+    #
     if [ ! -n "$DATABASE" ];then
       printText DATABASE
     fi
     envChange DB_DATABASE $DATABASE
 
+    #
+    # mysql Username
+    #
     if [ ! -n "$MYSQL_USER" ];then
       printText MYSQL_USER
     fi
     envChange DB_USERNAME $MYSQL_USER
 
+    #
+    # mysql UserPassword
+    #
     if [ ! -n "$MYSQL_PASS" ];then
-      printText DATABASE
+      printText MYSQL_PASS pass
     fi
     envChange DB_PASSWORD $MYSQL_PASS
 
+    #
+    # key:generate
+    #
+    echo " [    ] php artisan key:generate"
+    # php artisan key:generate
+
     exit 0
 
-    php artisan key:generate
 fi
+visu
 
-echo "====================================================="
-echo "$DATABASE を一度作成しましたか？(Y/N)"
-read ans
-echo "====================================================="
+#
+# Database Update
+#
+if [ $DB_UPDATE = 1];then
 
-if [ $ans = N ]; then
-
-    echo "====================================================="
-    echo "Database[$DATABASE] Create Now!"
-    echo "mySQLのパスワードを入力"
-    echo "====================================================="
-
-	mysql -u root -p -e 'create database '$DATABASE' '
-	echo "====================================================="
-
-else
-    echo "====================================================="
-    echo "[$DATABASE] Dump file write"
-    echo "mySQLのパスワードを入力"
-    echo "====================================================="
-    mysql -u root -p -e 'drop database `'$DATABASE'`;create database `'$DATABASE'`'
+    if [  ]
 fi
+visu
 
 php artisan migrate
 php artisan db:seed
