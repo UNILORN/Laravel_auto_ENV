@@ -10,12 +10,21 @@ initsh_start
 
 if [ -n "$1" ]; then
   #
-  # Reset Congif
+  # Reset Config
   #
   if [ $1 = reset ]; then
     echo "=============== Config Reset Start ==============="
     configReset
     echo "=============== Config Reset End ==============="
+    source Laravel_auto_ENV/config.sh
+  fi
+
+  #
+  # Revival Congig
+  #
+  if [ $1 = revival ]; then
+    echo "=============== Config Revival ==============="
+    cp Laravel_auto_ENV/config_bk config.sh
     source Laravel_auto_ENV/config.sh
   fi
 fi
