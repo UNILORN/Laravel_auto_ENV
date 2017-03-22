@@ -1,19 +1,25 @@
 #!/bin/sh
+source Laravel_auto_ENV/config.sh
+source Laravel_auto_ENV/function.sh
 
-composer install
+if [ $COMPOSER_UPDATE=0 ]; then
+  DataChange COMPOSER_UPDATE 1
+  exit 0
+  composer update
+fi
+exit 0
 
-echo "====================================================="
-echo "ENVを更新しますか？(Y/N)"
-read envans
-echo "====================================================="
+if [ $COMPOSER_INSTALL = 0 ]; then
+  composer install
+fi
 
-if [ $envans = Y ]; then
+if [ $ENV_STATUS = 0 ]; then
 
     cp .env.example .env
 
     echo "====================================================="
-    echo "DatabaseNameをOIC_Bookとして.envを更新します"
-    sed -i -e 's/DB_DATABASE=homestead/DB_DATABASE=OIC_Book/' .env
+    echo "DatabaseNameを$DATABASEとして.envを更新します"
+    sed -i -e 's/DB_DATABASE=homestead/DB_DATABASE='$DATABASE'/' .env
 
     echo "====================================================="
     echo "DBのユーザ名を入力"
@@ -33,30 +39,26 @@ if [ $envans = Y ]; then
 fi
 
 echo "====================================================="
-echo "OIC_Book を一度作成しましたか？(Y/N)"
+echo "$DATABASE を一度作成しましたか？(Y/N)"
 read ans
 echo "====================================================="
 
 if [ $ans = N ]; then
 
     echo "====================================================="
-    echo "Database[OIC_Book] Create Now!"
+    echo "Database[$DATABASE] Create Now!"
     echo "mySQLのパスワードを入力"
     echo "====================================================="
 
-	mysql -u root -p -e 'create database OIC_Book'
+	mysql -u root -p -e 'create database '$DATABASE' '
 	echo "====================================================="
-
-	echo "[OIC_Book] Dump file write"
-    echo "mySQLのパスワードを入力"
-    echo "====================================================="
 
 else
     echo "====================================================="
-    echo "[OIC_Book] Dump file write"
+    echo "[$DATABASE] Dump file write"
     echo "mySQLのパスワードを入力"
     echo "====================================================="
-    mysql -u root -p -e 'drop database `OIC_Book`;create database `OIC_Book`'
+    mysql -u root -p -e 'drop database `'$DATABASE'`;create database `'$DATABASE'`'
 fi
 
 php artisan migrate
