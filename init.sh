@@ -2,7 +2,7 @@
 source Laravel_auto_ENV/config.sh
 source Laravel_auto_ENV/function.sh
 
-if [ $COMPOSER_UPDATE=0 ]; then
+if [ $COMPOSER_UPDATE = 0 ]; then
   ConfigChange COMPOSER_UPDATE 1
   # composer update
 fi
@@ -13,24 +13,29 @@ if [ $COMPOSER_INSTALL = 0 ]; then
 fi
 
 if [ ! -e .env ];then
+echo " [    ]  .env Not Found"
 
   if [ -e .env.example ]; then
+    echo " [    ] .env.example Found"
     cp .env.example .env
+    echo " [ OK ] Copy Success!! .env.example -> .env"
   else
-    touch .env
-    
+    echo " [    ]  .env.example Not Found"
+    cp Laravel_auto_ENV/.env.example .env
+    echo " [ OK ] Copy Success!! Laravel_auto_ENV/.env.example -> .env"
   fi
 
 fi
-exit 0
 
 if [ $ENV_STATUS = 0 ]; then
 
-    cp .env.example .env
+    if [ ! -n "$DATABASE" ];then
+      printText DATABASE $DATABASE
+      echo $DATABASE
+    fi
+    exit 0
 
-    echo "====================================================="
-    echo "DatabaseNameを$DATABASEとして.envを更新します"
-    sed -i -e 's/DB_DATABASE=homestead/DB_DATABASE='$DATABASE'/' .env
+    envChange DB_DATABASE $DATABASE
 
     echo "====================================================="
     echo "DBのユーザ名を入力"

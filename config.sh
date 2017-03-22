@@ -3,7 +3,7 @@
 #
 # Database Name
 #
-DATABASE=hogehoge
+DATABASE=
 
 #
 # Mysql Config
