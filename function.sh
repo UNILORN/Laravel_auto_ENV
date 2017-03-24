@@ -65,6 +65,7 @@ function initsh_start(){
 }
 
 function configReset(){
+  visu
   ConfigChange DATABASE
   ConfigChange MYSQL_USER
   ConfigChange MYSQL_PASS
@@ -72,4 +73,5 @@ function configReset(){
   ConfigChange COMPOSER_UPDATE 1
   ConfigChange COMPOSER_INSTALL 0
   ConfigChange DB_UPDATE 1
+  visu
 }
