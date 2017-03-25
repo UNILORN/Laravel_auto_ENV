@@ -31,7 +31,7 @@ if [ -n "$1" ]; then
   #
   # Update env
   #
-  if [ $1 = revival ]; then
+  if [ $1 = env ]; then
     echo "=============== .env Update ==============="
     ConfigChange DATABASE
     ConfigChange MYSQL_USER
