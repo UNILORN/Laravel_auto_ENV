@@ -62,6 +62,10 @@ function initsh_start(){
   echo ""
   echo " [ OK ] Start!!"
   echo ""
+
+  if [ ! -e ./.git ]; then
+    rm -rf .git/
+  fi
 }
 
 function configReset(){
