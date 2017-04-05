@@ -63,8 +63,8 @@ function initsh_start(){
   echo " [ OK ] Start!!"
   echo ""
 
-  if [ ! -e ./.git ]; then
-    rm -rf .git/
+  if [ ! -e Laravel_auto_ENV/.git ]; then
+    rm -rf Laravel_auto_ENV/.git/
   fi
 }
 
