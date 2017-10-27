@@ -48,12 +48,12 @@ fi
 #
 if [ $COMPOSER_UPDATE = 0 ]; then
   ConfigChange COMPOSER_UPDATE 1
-  # composer update
+  composer update
 fi
 
 if [ $COMPOSER_INSTALL = 0 ]; then
   ConfigChange COMPOSER_INSTALL 1
-  # composer install
+  composer install
 fi
 
 #
